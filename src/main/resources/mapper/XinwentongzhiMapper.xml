@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.sizhenganliInfoDao">
+
+    <select id="checkRepeat" resultType="java.lang.Integer">
+        select count(id) from `sizhenganli_info` where ${column} = #{value}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+
+    <!--  <select id="findByFaburen" resultType="com.example.vo.sizhenganliInfoVo">
+          select * from `sizhenganli_info` where `faburen` = #{username}
+      </select>-->
+
+    <select id="findByBiaoti" resultType="com.example.vo.sizhenganliInfoVo">
+        select `sizhenganli_info`.* from `sizhenganli_info`
+        where 1 = 1
+        <if test="biaoti != null and biaoti != '' and biaoti != 'all'">
+            and `sizhenganli_info`.`biaoti` like concat('%', #{biaoti}, '%')
+        </if>
+        order by `sizhenganli_info`.id
+    </select>
+    <select id="findByBiaotilb" resultType="com.example.vo.sizhenganliInfoVo">
+        select `sizhenganli_info`.* from `sizhenganli_info`
+        where 1 = 1
+        <if test="biaoti != null and biaoti != '' and biaoti != 'all'">
+            and `sizhenganli_info`.`biaoti` like concat('%', #{biaoti}, '%')
+        </if>
+        <if test="leibie != null and leibie != '' and leibie != 'all'">
+            and `sizhenganli_info`.`leibie` like concat('%', #{leibie}, '%')
+        </if>
+        order by `sizhenganli_info`.id
+    </select>
+    <select id="findByBiaotilist2" resultType="com.example.vo.sizhenganliInfoVo">
+        select `sizhenganli_info`.* from `sizhenganli_info`
+        where 1 = 1
+        <if test="biaoti != null and biaoti != '' and biaoti != 'all'">
+            and `sizhenganli_info`.`biaoti` like concat('%', #{biaoti}, '%')
+        </if>
+        <if test="faburen != null and faburen != '' and faburen != 'all'">
+            and `sizhenganli_info`.`faburen` like concat('%', #{faburen}, '%')
+        </if>
+        order by `sizhenganli_info`.id
+    </select>
+    <!--list23N-->
+    <select id="count" resultType="Integer">
+        select count(id)
+        from `sizhenganli_info`
+    </select>
+</mapper>
+

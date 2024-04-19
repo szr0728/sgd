@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>资源平台</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+          name="viewport">
+    <link href="../images/layui/css/layui.css" media="all" rel="stylesheet">
+    <link href="../images/style/admin.css" media="all" rel="stylesheet">
+    <link href="../images/style/login.css" media="all" rel="stylesheet">
+</head>
+<body style="background: url('../images/loginbg.jpg');background-position: center center;background-size: cover;">
+<div id="app">
+    <form name="form1">
+        <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+            <div class="layadmin-user-login-main" style="background: rgba(250,250,250,0.45);">
+                <div class="layadmin-user-login-box layadmin-user-login-header">
+                    <h2>后台登陆</h2>
+                    <p>课程思政案例管理平台</p>
+                </div>
+                <div class="layadmin-user-login-box layadmin-user-login-body ">
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-username"
+                               for="LAY-user-login-username"></label>
+                        <input class="layui-input" id="LAY-user-login-username" lay-verify="required" name="username"
+                               placeholder="用户名" type="text" v-model="user.username">
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                               for="LAY-user-login-password"></label>
+                        <input class="layui-input" id="LAY-user-login-password" lay-verify="required" name="pwd"
+                               placeholder="密码" type="password" v-model="user.mima">
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-refresh"
+                               for="LAY-user-login-password"></label>
+                        <select class="layui-input" id="cx" name="cx" v-model="user.level">
+                            <option name="level" value="管理员" selected>管理员</option>
+                            <option name="level" value="用户">用户</option>
+
+                        </select>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-row">
+                            <div class="layui-col-xs7">
+                                <label class="layadmin-user-login-icon layui-icon layui-icon-vercode"
+                                       for="yzm"></label>
+                                <input class="layui-input" id="yzm" lay-verify="required" name="yzm"
+                                       placeholder="验证码" type="text">
+                            </div>
+                            <div class="layui-col-xs5">
+                                <div style="margin-left: 10px;">
+                                    <input class="layui-input" id="code" type="text"/></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="margin-bottom: 20px;"></div>
+                    <div class="layui-form-item">
+                        <button @click="login" class="layui-btn layui-btn-fluid" id="loginBtn"
+                                lay-filter="LAY-user-login-submit" lay-submit type="button">登
+                            入
+                        </button>
+                    </div>
+                    <div class="layui-trans layui-form-item layadmin-user-login-other">
+                        <label></label>
+                        <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
+                        <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
+                        <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
+                        <a class="layadmin-user-jump-change layadmin-link" href="reg.html"></a></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="../images/layui/layui.js"></script>
+    <script src="../images/js/jquery-1.9.1.min.js"></script>
+    <script>
+        layui.use(['element', 'form', 'layer'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+            var form = layui.form;
+            var layer = layui.layer;
+        });
+    </script>
+</div>
+
+<script src="../js/hsgyanzhengma.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            user: {
+                username: "",
+                mima: "",
+                level: null
+            },
+            authorities: [],
+            selected:"管理员"
+        },
+        created: function () {
+            axios.get("/getAuthority").then(res => {
+                if (res.data.code === '0') {
+                    this.authorities = res.data.data;
+                } else {
+                    alert(res.data.msg);
+                }
+            });
+        },
+        methods: {
+            login() {
+                if (!this.user.username) {
+                    alert("请输入用户名");
+                    return;
+                }
+                if (!this.user.mima) {
+                    alert("请输入密码");
+                    return;
+                }
+                if (!this.user.level) {
+                    alert("请选择角色");
+                    return;
+                }
+                // var inputCode = yzm.value.toUpperCase(); //取得输入的验证码并转化为大写??
+                // if (inputCode.length == 0) { //若输入的验证码长度为0
+                //     alert("请输入验证码 "); //则弹出请输入验证码
+                //     return;
+                // } else if (inputCode != codes.toUpperCase()) { //若输入的验证码与产生的验证码不一致时
+                //     alert("验证码输入错误 请重新输入"); //则弹出验证码输入错误
+                //     change();//刷新验证码
+                //     input.value = "";//清空文本框
+                //     return;
+                // }
+
+                axios.post('/login', this.user).then(res => {
+                    if (res.data.code === '0') {
+                        localStorage.setItem('user', JSON.stringify(res.data.data));
+                        if (this.user.level === "管理员") {
+                            window.location = '/end/page/main_guanliyuan.html';
+                        }
+                        if (this.user.level === "用户") {
+                            window.location = '/end/page/main_yonghu.html';
+                        }
+
+
+                    } else {
+                        alert(res.data.msg);
+                    }
+                });
+            },
+        }
+    });
+</script>
+</body>
+</html>

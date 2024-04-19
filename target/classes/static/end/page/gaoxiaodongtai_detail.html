@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="no-cache" http-equiv="pragma"/>
+    <meta content="Wed, 26 Feb 1997 08:21:57 GMT" http-equiv="expires"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <title>高校动态详细</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+    <link href="../css/nav.css" rel="stylesheet">
+    <link href="../css/font-awesome.css" rel="stylesheet">
+    <link href="../css/element/index.css" rel="stylesheet">
+    <link href="../css/hsg.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <div>
+        <div style="padding: 0 20px">
+            <div>
+                <div style="color: #666; font-weight: bold; border-bottom: 1px solid #ccc; padding: 10px 0; margin-bottom: 20px; font-size: 30px;">
+                    高校动态详细
+                </div>
+            </div>
+            <div style="margin-top: 10px">
+                <div style="border: 1px solid #ff6b31;">
+                    <div style="padding: 5px; border-bottom: 1px solid #ff6b31; color: white; background-color: #ff6b31;">
+                        高校动态详细
+                    </div>
+                    <div style="border: 1px solid #ccc; padding: 10px">
+                        <div class="table-responsive">
+
+
+                            <table align="center" border="0" cellpadding="3" cellspacing="1" class="table table-striped table-bordered table-hover"
+                                   width="98%">
+                                <tr>
+                                    <td align=center rowspan=2><a target=_blank v-for="id in tupian"><img
+                                            :src="'/files/download/' + id" @mouseover="mouseOver(id)" border=0
+                                            height=215 width=228></a></td>
+                                    <td height=44 width='11%'>学校名称：</td>
+                                    <td width='39%'>{{gaoxiaodongtaiInfo.xuexiaomingcheng}}</td>
+                                </tr>
+                                <tr>
+                                    <td height=44 width='11%'>记录时间：</td>
+                                    <td width='39%'>{{gaoxiaodongtaiInfo.jilushijian}}</td>
+                                </tr>
+                                <tr>
+
+                                    <td height=100 width='11%'>近期动态：</td>
+                                    <td colspan=2 height=100 width='39%'>{{gaoxiaodongtaiInfo.jinqidongtai}}</td>
+                                </tr>
+                                <tr>
+                                    <td align=center colspan=3><input class="btn btn-primary" name=Submit5 onClick="javascript:history.back()"
+                                                                      type=button
+                                                                      value=返回/>&nbsp;<input class="btn btn-primary"
+                                                                                                            name=Submit52
+                                                                                                            onClick="javascript:window.print()"
+                                                                                                            type=button
+                                                                                                            value=打印/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/my.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script src="../js/element/index.js"></script>
+
+
+<script>
+    new Vue({
+        el: '#wrapper',
+        data: {
+            isCollect: false,
+            gaoxiaodongtaiid: 0,
+            tupian: [],
+            gaoxiaodongtaiInfo: {},
+            user: {},
+
+        },
+
+        created: function () {
+
+            this.gaoxiaodongtaiid = this.getQueryVariable('gaoxiaodongtaiid');
+            this.loadShangpinxinxiInfo();
+        },
+
+        methods: {
+
+            loadShangpinxinxiInfo() {
+                axios.get("/gaoxiaodongtaiInfo/" + this.gaoxiaodongtaiid).then(res => {
+                    if (res.data.code === '0') {
+                        this.gaoxiaodongtaiInfo = res.data.data;
+                        if (this.gaoxiaodongtaiInfo.tupian) {
+                            let tupian = JSON.parse(this.gaoxiaodongtaiInfo.tupian);
+
+                            if (tupian.length > 4) {
+                                tupian = tupian.splice(0, 4);
+                            }
+                            this.tupian = tupian;
+                            if (tupian.length) {
+                                this.mainSrc = '/files/download/' + tupian[0];
+                            }
+                        }
+                    } else {
+                        alert(res.data.msg);
+                    }
+                });
+            },
+            getQueryVariable(variable) {
+                let query = window.location.search.substring(1);
+                let vars = query.split("&");
+                for (let i = 0; i < vars.length; i++) {
+                    let pair = vars[i].split("=");
+                    if (pair[0] === variable) {
+                        return pair[1];
+                    }
+                }
+                return '';
+            },
+
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f72bda62-dea3-4f5f-af7a-c00917dacf70" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Options API Component" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\Tools\maven_localRepository" />
+        <option name="userSettingsFile" value="D:\Tools\apache-maven-3.9.6\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="25NKwEsEU2mK19fwPHDrS53x3DQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript 调试.SiZhengAnLiGuanLi.html.executor": "Run",
+    "JavaScript 调试.SiZhengAnLiList.html.executor": "Run",
+    "JavaScript 调试.index.html.executor": "Run",
+    "JavaScript 调试.sizhenganlidetail.html.executor": "Run",
+    "Maven.sprkcszzypthsg2615WECE [clean].executor": "Run",
+    "Maven.sprkcszzypthsg2615WECE [compile].executor": "Run",
+    "Maven.sprkcszzypthsg2615WECE [install].executor": "Run",
+    "Maven.sprkcszzypthsg2615WECE [package].executor": "Run",
+    "Maven.sprkcszzypthsg2615WECE [site].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.Application.executor": "Run",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/15833/Desktop/Project/sgd/Ideological and political/src/main/resources/static/end/page",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "工件",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2551724",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3.6\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Options API Component"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\15833\Desktop\Project\sgd\Ideological and political\src\main\resources\static\end\page" />
+      <recent name="C:\Users\15833\Documents\Project\Ideological and political\Ideological and political\src\main\resources\static\front\uploadfile" />
+      <recent name="D:\idea\Ideological and political\src\main\resources\static\end\img" />
+      <recent name="D:\idea\Ideological and political\src\main\resources\static\end\page" />
+      <recent name="D:\idea\Ideological and political\src\main\resources\static\end" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\idea\Ideological and political\src\main\resources\static\end\img" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration name="main_guanliyuan.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/Ideological and political/sprkcszzypthsg2615WECE/static/end/page/main_guanliyuan.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="sy.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Ideological and political/sprkcszzypthsg2615WECE/static/end/page/sy.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="sprkcszzypthsg2615WECE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f72bda62-dea3-4f5f-af7a-c00917dacf70" name="Default Changelist" comment="" />
+      <created>1645362340382</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645362340382</updated>
+      <workItem from="1645362341731" duration="215000" />
+      <workItem from="1645362797385" duration="3113000" />
+      <workItem from="1645404968293" duration="2621000" />
+      <workItem from="1645408329399" duration="146000" />
+      <workItem from="1645410501192" duration="723000" />
+      <workItem from="1645411508302" duration="1840000" />
+      <workItem from="1645423012487" duration="801000" />
+      <workItem from="1645432678669" duration="4695000" />
+      <workItem from="1645550325665" duration="947000" />
+      <workItem from="1650611873090" duration="10618000" />
+      <workItem from="1650632766425" duration="601000" />
+      <workItem from="1650692627447" duration="4737000" />
+      <workItem from="1650701702676" duration="6013000" />
+      <workItem from="1650708228154" duration="1988000" />
+      <workItem from="1650768413848" duration="5290000" />
+      <workItem from="1651471096311" duration="3617000" />
+      <workItem from="1711951149567" duration="2951000" />
+      <workItem from="1712896495420" duration="88000" />
+      <workItem from="1713235647899" duration="7182000" />
+      <workItem from="1713248304875" duration="9415000" />
+      <workItem from="1713340015452" duration="3606000" />
+      <workItem from="1713433233015" duration="1225000" />
+      <workItem from="1713444718083" duration="1381000" />
+      <workItem from="1713493089730" duration="17067000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

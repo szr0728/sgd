@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="no-cache" http-equiv="pragma"/>
+    <meta content="no-cache, must-revalidate" http-equiv="content-type"/>
+    <meta content="Wed, 26 Feb 1997 08:21:57 GMT" http-equiv="expires"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <title>home</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+    <link href="../css/nav.css" rel="stylesheet">
+    <link href="../css/font-awesome.css" rel="stylesheet">
+    <link href="../css/element/index.css" rel="stylesheet">
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="wrapper" v-cloak>
+    <!--导航栏-->
+
+    <!-- 主体 -->
+    <div>
+
+
+        <!-- 主体开始 -->
+        <div id="main" class="main_div">
+
+<!--            <img height="100%" src="../img/show.jpg" width="100%"/>-->
+        <h1 class="main_title">课程思政案例管理平台</h1>
+        </div>
+        <!-- 主体结束 -->
+    </div>
+</div>
+
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/my.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script src="../js/element/index.js"></script>
+
+<script>
+
+    new Vue({
+        el: "#wrapper",
+        data: {
+            user: {},
+            authority: [],
+            totalUser: 0,
+            totalComment: 0,
+            totalPrice: 0,
+            totalShopping: 0,
+            echartsShowLeftArr: [],
+            echartsShowRightArr: [],
+            echartsType: 'pie'
+        },
+        created: function () {
+            this.user = JSON.parse(localStorage.getItem("user"));
+
+            axios.get("/authority").then(res => {
+                if (res.data.code === '0') {
+                    this.authority = res.data.data;
+                } else {
+                    msg('error', res.data.msg);
+                }
+            });
+
+            axios.get("/echarts/getTotal").then(res => {
+                if (res.data.code === '0') {
+                    let map = res.data.data;
+                    this.totalUser = map['totalUser'];
+                    this.totalComment = map['totalComment'];
+                    this.totalPrice = map['totalPrice'];
+                    this.totalShopping = map['totalShopping'];
+                }
+            });
+
+            this.drawLine();
+        },
+        methods: {
+            drawLine() {
+                axios.get('/echarts/get/price').then(res => {
+                    // 基于准备好的dom，初始化echarts实例
+                    this.echartsShowLeftArr = res.data.data;
+                    if (this.echartsShowLeftArr.length) {
+                        let myChart = echarts.init(document.getElementById('left'));
+                        let option = this.getEchartsType(this.echartsShowLeftArr, this.echartsType);
+                        myChart.setOption(option, true);
+                    }
+                });
+                axios.get('/echarts/get/shopping').then(res => {
+                    // 基于准备好的dom，初始化echarts实例
+                    this.echartsShowRightArr = res.data.data;
+                    if (this.echartsShowRightArr.length) {
+                        let myChart = echarts.init(document.getElementById('right'));
+                        let option = this.getEchartsType(this.echartsShowRightArr, this.echartsType);
+                        myChart.setOption(option, true);
+                    }
+                });
+            },
+            selectEchartsType() {
+                let leftChart = echarts.init(document.getElementById('left'));
+                let leftOption = this.getEchartsType(this.echartsShowLeftArr, this.echartsType);
+                leftChart.setOption(leftOption, true);
+
+                let rightChart = echarts.init(document.getElementById('right'));
+                let rightOption = this.getEchartsType(this.echartsShowRightArr, this.echartsType);
+                rightChart.setOption(rightOption, true);
+            },
+            getEchartsType(echartsArr, type) {
+                for (let item of echartsArr) {
+                    if (item.series[0].type === type) {
+                        return item;
+                    }
+                }
+            },
+            logout() {
+                logout();
+            }
+        }
+    });
+
+
+</script>
+
+</body>
+</html>
+<style lang="scss">
+    .main_div{
+        display: flex;
+        justify-content: center;
+
+        /*border: 1px red solid;*/
+        height: 100vh;
+        align-items: center;
+    }
+    .main_title{
+        user-select: none; /* Standard syntax */
+        font-size: 100px;
+        font-family: 华文行楷;
+    }
+</style>

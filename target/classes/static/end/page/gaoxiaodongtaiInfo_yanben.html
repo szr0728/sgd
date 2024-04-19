@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="no-cache" http-equiv="pragma"/>
+    <meta content="no-cache, must-revalidate" http-equiv="content-type"/>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="Wed, 26 Feb 1997 08:21:57 GMT" http-equiv="expires"/>
+    <title>高校动态</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common.css" rel="stylesheet">
+    <link href="../css/nav.css" rel="stylesheet">
+    <link href="../css/font-awesome.css" rel="stylesheet">
+    <link href="../css/element/index.css" rel="stylesheet">
+    <link href="../css/hsg.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <div>
+        <div style="padding: 0 20px">
+            <div>
+                <div style="color: #666; font-weight: bold; border-bottom: 1px solid #ccc; padding: 10px 0; margin-bottom: 20px; font-size: 30px;">
+                    高校动态
+                </div>
+            </div>
+            <div style="margin-top: 10px">
+                <div style="border: 1px solid #ff6b31;">
+                    <div style="padding: 5px; border-bottom: 1px solid #ff6b31; color: white; background-color: #ff6b31;">
+                        高校动态表
+                    </div>
+                    <div style="border: 1px solid #ccc; padding: 10px">
+                        <div class="table-responsive">
+                            <div class="nx-table-header" style="position: relative">
+
+
+                                <input @keyup.enter="loadTable(1)" placeholder="请输入搜索内容" type="text"
+                                       v-model="name">
+                                <i class="glyphicon glyphicon-search" style="margin-left: -20px"></i>
+                            </div>
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>图片</th>
+                                    <th>学校名称</th>
+                                    <th>记录时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody v-for="obj in objs">
+                                <tr>
+                                    <td>{{obj.id}}</td>
+                                    <td><img :src="'/files/download/'+obj.tupianavt" class="avatar-table"
+                                             v-if="obj.tupianavt"><img class="avatar-table" src="../img/no-avater.jpg"
+                                                                       v-else></td>
+                                    <td>{{obj.xuexiaomingcheng}}</td>
+                                    <td>{{obj.jilushijian}}</td>
+                                    <td>
+
+                                        <!--lianjie1-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--danhxexiaxnshi-->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" v-bind:class="{ disabled: preActive }">
+                                        <a class="page-link" href="javascript:void(0)"
+                                           v-on:click="loadTable(pageInfo.pageNum - 1)">上一页</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)" v-if="pageInfo.pageNum > 1"
+                                           v-on:click="loadTable(pageInfo.pageNum - 1)">{{pageInfo.pageNum - 1}}</a>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <a aria-disabled="true" class="page-link" href="javascript:void(0)">{{pageInfo.pageNum}}</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)" v-if="pageInfo.hasNextPage"
+                                           v-on:click="loadTable(pageInfo.pageNum + 1)">{{pageInfo.pageNum + 1}}</a>
+                                    </li>
+                                    <li class="page-item" v-bind:class="{ disabled: nextActive }">
+                                        <a class="page-link" href="javascript:void(0)"
+                                           v-on:click="loadTable(pageInfo.hasNextPage? (pageInfo.pageNum + 1) : pageInfo.pageNum)">下一页</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="mod" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">请填写信息</span>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <input id="id" name="id" type="hidden" v-model="entity.id">
+                        <div class="form-group"><label class="col-sm-3 control-label">图片</label>
+                            <div class="col-sm-7">
+                                <el-upload :before-upload="tupianbaul" :on-success="tupiansccs" :show-file-list="false"
+                                           action="/files/upload" class="avatar-uploader"><img :src="tupianimrl"
+                                                                                                     class="avatar"
+                                                                                                     v-if="tupianimrl"><img
+                                        :src="'/files/download/'+tupianavt" class="avatar" v-else-if="tupianavt"> <i
+                                        class="el-icon-plus avatar-uploader-icon" v-else></i></el-upload>
+                            </div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-3 control-label">学校名称</label>
+                            <div class="col-sm-7"><input class="form-control" id="xuexiaomingcheng"
+                                                         placeholder="请输入学校名称" style="width: 160px"
+                                                         type="text" v-model="entity.xuexiaomingcheng"></div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-3 control-label">记录时间</label>
+                            <div class="col-sm-7">
+                                <div class="block">
+                                    <el-date-picker clearable id="jilushijian" placeholder="选择日期" type="date"
+                                                    v-model="entity.jilushijian" value-format="yyyy-MM-dd"></el-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-3 control-label">近期动态</label>
+                            <div class="col-sm-7"><textarea class="form-control" id="jinqidongtai"
+                                                            placeholder="请输入近期动态" style="height: 100px"
+                                                            type="text" v-model="entity.jinqidongtai"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">关闭</button>
+
+                    <button @click="update()" class="btn btn-primary" type="button">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--m_liangbumod-->
+</div>
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/my.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script src="../js/element/index.js"></script>
+
+<script>
+    function checkValid(entity) {
+        if (!entity.tupian || entity.tupian === "") {
+            alert("图片不能为空");
+            return false;
+        }
+        if (!entity.xuexiaomingcheng || entity.xuexiaomingcheng === "") {
+            alert("学校名称不能为空");
+            return false;
+        }
+        return true;
+    }
+
+    new Vue({
+        el: '#wrapper',
+        data: {
+
+            authority: [],
+            permission: [],
+            storeUser: JSON.parse(localStorage.getItem("user")),
+            name: '',
+            user: {},
+
+            tupianimrl: '',
+//youtupianimrl			
+            objs: [],
+            pageInfo: {},
+            preActive: true,
+            nextActive: true,
+            tupianavt: null,
+
+            //youxia2sui
+            //youxxiabiaoxduan
+            entity: {
+                tupianflst: [],
+
+            }
+        },
+        created:
+            function () {
+                this.loadTable(1);
+                this.user = JSON.parse(localStorage.getItem('user'));
+                axios.get("/permission/3").then(res => {
+                    if (res.data.code === '0') {
+                        this.permission = res.data.data;
+                    } else {
+                        msg('error', res.data.msg);
+                    }
+                });
+                axios.get("/authority").then(res => {
+                    if (res.data.code === '0') {
+                        this.authority = res.data.data;
+                    } else {
+                        msg('error', res.data.msg);
+                    }
+                });
+                //youcreatexia2sui
+                //youffxiaxbiaoxduan
+                //list23Nfbr
+                //youtixing
+            },
+        methods: {
+            loadTable(pageNum) {
+                let name = this.name === '' ? "all" : this.name;
+                axios.get("/gaoxiaodongtaiInfo/page/" + name + "?pageNum=" + pageNum).then(res => {
+                    if (res.data.code === '0') {
+                        this.objs = res.data.data.list;
+                        res.data.data.list.forEach(item => {
+                            if (item.tupian) {
+                                item.tupianavt = JSON.parse(item.tupian)[0];
+                            }
+                            //tupianloadtb
+                            //dhjsuanxx
+                        })
+                        this.pageInfo = res.data.data;
+                        this.preActive = !(this.pageInfo.hasPreviousPage);
+                        this.nextActive = !(this.pageInfo.hasNextPage);
+                    } else {
+                        msg('error', res.data.msg);
+                    }
+                });
+            },
+
+            detail(id) {
+                window.open("/front/gaoxiaodongtaidetail.html?gaoxiaodongtaiid=" + id);
+            },
+            init(o) {
+                //if (this.user.level === "管理员")
+//                {}
+//                else
+//                {
+//                    msg('warning', '你没有权限操作');
+//                    return;
+//                }
+                this.entity.tupianflst = [];
+
+                this.tupianavt = null;
+
+                this.tupianimrl = null;
+
+                this.entity = JSON.parse(JSON.stringify(o));
+                if (this.entity.tupian) {
+                    this.tupianavt = JSON.parse(this.entity.tupian)[0];
+                }
+                //tupianxinxiit4
+                $('#mod').modal('show');
+            },
+            //m_liangbuinit
+            add() {
+                //if (this.user.level === "管理员")
+//                {}
+//                else
+//                {
+//                    msg('warning', '你没有权限操作');
+//                    return;
+//                }
+
+                this.entity.tupianflst = [];
+
+                this.tupianavt = null;
+
+                this.tupianimrl = null;
+
+                $('#mod').modal('show');
+            },
+            update() {
+                if (checkValid(this.entity)) {
+                    debugger
+                    if (!this.entity.id) {
+                        axios.post(
+                            "/gaoxiaodongtaiInfo", this.entity
+                        ).then(res => {
+                            if (res.data.code === '0') {
+                                msg('success', '添加成功');
+                                $('#mod').modal('hide');
+                                this.loadTable(1);
+                            } else {
+                                msg('error', res.data.msg);
+                            }
+                        })
+                    } else {
+                        axios.put(
+                            "/gaoxiaodongtaiInfo", this.entity
+                        ).then(res => {
+                            if (res.data.code === '0') {
+                                msg('success', '更新成功');
+                                $('#mod').modal('hide');
+                                this.loadTable(1);
+                            } else {
+                                msg('error', res.data.msg);
+                            }
+                        })
+                    }
+                }
+            },
+            tupiansccs(res, file) {
+                this.tupianimrl = URL.createObjectURL(file.raw);
+                this.entity.tupianflst.push(res.data.id);
+                this.tupianavt = res.data.id
+            },
+            tupianbaul(file) {
+                this.entity.tupianflst = [];
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2000MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            //m_tupiansccsbaul
+            del(id) {
+                //if (this.user.level === "管理员")
+//                {}
+//                else
+//                {
+//                    msg('warning', '你没有权限操作');
+//                    return;
+//                }
+                let _this = this;
+                this.$confirm('确认删除？', '系统提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    cancelButtonClass: 'btn-custom-cancel',
+                    type: 'warning'
+                }).then(function () {
+                    axios.delete("/gaoxiaodongtaiInfo/" + id).then(res => {
+                        if (res.data.code === '0') {
+                            msg('success', '删除成功');
+                            _this.loadTable(1);
+                        } else {
+                            msg('error', res.data.msg);
+                        }
+                    });
+                }).catch(function () {
+                    console.log("取消成功！");
+                });
+            },
+            downModel() {
+                location.href = '/gaoxiaodongtaiInfo/getExcelModel';
+            },
+            clickUpload: function (e) {
+                if (this.user.level === "管理员") {
+                } else {
+                    msg('warning', '你没有权限操作');
+                    return;
+                }
+            },
+            upload: function () {
+                let files = this.$refs.file.files;
+                for (let i = 0; i < files.length; i++) {
+                    let formData = new FormData();
+                    formData.append('file', files[i]);
+                    axios.post('/gaoxiaodongtaiInfo/upload', formData, {
+                        'Content-Type': 'multipart/form-data'
+                    }).then(res => {
+                        if (res.data.code === '0') {
+                            msg('success', '批量导入成功');
+                            this.loadTable(1);
+                        } else {
+                            msg('error', res.data.msg);
+                        }
+                    })
+                }
+            },
+            //youscwenjian
+            changeStatus(id) {
+                let _this = this;
+                axios.get("/gaoxiaodongtaiInfo/changeStatus/" + id).then(res => {
+                    if (res.data.code === '0') {
+                        msg('success', '状态修改成功');
+                        _this.loadTable(this.pageInfo.pageNum);
+                    } else {
+                        msg('error', res.data.msg);
+                    }
+                });
+            },
+            //x2suilafuxzhi
+            hsgadd(id) {
+                window.location.href = 'xmkuaix_addlbdq.html?gaoxiaodongtaiid=' + id
+            },
+            logout() {
+                logout();
+            }
+        }
+    })
+</script>
+</body>
+</html>

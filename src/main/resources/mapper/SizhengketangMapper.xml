@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.SizhengketangInfoDao">
+
+    <select id="checkRepeat" resultType="java.lang.Integer">
+        select count(id) from `sizhengketang_info` where ${column} = #{value}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+
+    <select id="findByKechengbianhaolb" resultType="com.example.vo.SizhengketangInfoVo">
+        select `sizhengketang_info`.* from `sizhengketang_info`
+        where 1 = 1
+        <if test="kechengbianhao != null and kechengbianhao != '' and kechengbianhao != 'all'">
+            and `sizhengketang_info`.`kechengbianhao` like concat('%', #{kechengbianhao}, '%')
+        </if>
+        <if test="leixing != null and leixing != '' and leixing != 'all'">
+            and `sizhengketang_info`.`leixing` like concat('%', #{leixing}, '%')
+        </if>
+        order by `sizhengketang_info`.id
+    </select>
+
+
+    <select id="findByKechengmingchengzj" resultType="com.example.vo.SizhengketangInfoVo">
+        select *
+        from `sizhengketang_info`
+        where `kechengmingcheng` = #{username}
+    </select>
+
+    <select id="findByKechengbianhao" resultType="com.example.vo.SizhengketangInfoVo">
+        select `sizhengketang_info`.* from `sizhengketang_info`
+        where 1 = 1
+        <if test="kechengbianhao != null and kechengbianhao != '' and kechengbianhao != 'all'">
+            and `sizhengketang_info`.`kechengbianhao` like concat('%', #{kechengbianhao}, '%')
+        </if>
+        order by `sizhengketang_info`.id
+    </select>
+    <!--list23N-->
+    <select id="count" resultType="Integer">
+        select count(id)
+        from `sizhengketang_info`
+    </select>
+</mapper>
+
