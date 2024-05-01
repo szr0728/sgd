@@ -23,7 +23,7 @@
     </select>
     <select id="findByBiaotilb" resultType="com.example.vo.sizhenganliInfoVo">
         select `sizhenganli_info`.* from `sizhenganli_info`
-        where 1 = 1
+        where shengpi = "通过"
         <if test="biaoti != null and biaoti != '' and biaoti != 'all'">
             and `sizhenganli_info`.`biaoti` like concat('%', #{biaoti}, '%')
         </if>

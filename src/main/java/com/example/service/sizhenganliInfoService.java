@@ -85,13 +85,16 @@ public class sizhenganliInfoService {
         if (user.getLevel().equals("管理员")) {
             all = sizhenganliInfoDao.findByBiaoti(biaoti);
         }
-        //list2 if (user.getLevel().equals("cxcxx2")) {all = sizhenganliInfoDao.findByBiaotilist2(biaoti,user.getdxzhujian2()); }
+        System.out.println(user.getLevel());
+        if (user.getLevel().equals("用户")) {
+            all = sizhenganliInfoDao.findByBiaoti(biaoti);
+
+        }
         //list3 if (user.getLevel().equals("cxcxx3")) {all = sizhenganliInfoDao.findByBiaotilist3(biaoti,user.getdxzhujian3()); }
 
 
         return PageInfo.of(all);
     }
-
     public PageInfo<sizhenganliInfoVo> findPageqt(String biaoti, String leibie, Integer pageNum, Integer pageSize, HttpServletRequest request) {
         PageHelper.startPage(pageNum, pageSize);
 
@@ -111,17 +114,49 @@ public class sizhenganliInfoService {
 
     //yoxulogindenxglu
 
+//    public void changeStatus(Long id) {
+//        sizhenganliInfo sizhenganliInfo = sizhenganliInfoDao.selectByPrimaryKey(id);
+//        if (sizhenganliInfo.getStatus().equals("是")) {
+//            sizhenganliInfo.setStatus("否");
+//            sizhenganliInfoDao.updateByPrimaryKey(sizhenganliInfo);
+//        } else if (sizhenganliInfo.getStatus().equals("否")) {
+//            sizhenganliInfo.setStatus("是");
+//            sizhenganliInfoDao.updateByPrimaryKey(sizhenganliInfo);
+//        }
+//    }
+
     public void changeStatus(Long id) {
         sizhenganliInfo sizhenganliInfo = sizhenganliInfoDao.selectByPrimaryKey(id);
-        if (sizhenganliInfo.getStatus().equals("是")) {
-            sizhenganliInfo.setStatus("否");
+        if (sizhenganliInfo.getShengpi().equals("未通过")) {
+            sizhenganliInfo.setShengpi("通过");
             sizhenganliInfoDao.updateByPrimaryKey(sizhenganliInfo);
-        } else if (sizhenganliInfo.getStatus().equals("否")) {
-            sizhenganliInfo.setStatus("是");
+        } else if (sizhenganliInfo.getShengpi().equals("通过")) {
+            sizhenganliInfo.setShengpi("未通过");
             sizhenganliInfoDao.updateByPrimaryKey(sizhenganliInfo);
         }
     }
     //youtixing
+    public void approve(Long id) {
+        sizhenganliInfo info = findById(id);
+        if (info != null) {
+            info.setShengpi("通过");
+            update(info);
+        } else {
+//            throw new CustomException(ResultCode.DATA_NOT_FOUND);
+        }
+    }
 
+    /**
+     * 通过ID更改思政案例审批状态为不通过
+     */
+    public void reject(Long id) {
+        sizhenganliInfo info = findById(id);
+        if (info != null) {
+            info.setShengpi("不通过");
+            update(info);
+        } else {
+//            throw new CustomException(ResultCode.DATA_NOT_FOUND);
+        }
+    }
 
 }

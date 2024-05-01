@@ -37,11 +37,13 @@ document.write("	<li class='Lev1' id='nav_12'><a href='index.html' class='menu1'
 document.write("<li class='Lev1 drop' id='nav_4'>");
 document.write("<a style='cursor:pointer' class='menu1'>思政专题<i class='fa fa-caret-down'></i></a>");
 document.write("<ul class='drop-down sub-menu2'>");
-document.write("	<li class='Lev2'><a href='SiZhengAnLiList.html?lb=历史学' class='menu2'>历史学</a></li> " +
+document.write(
     "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=工学' class='menu2'>工学</a></li>" +
     "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=经济学' class='menu2'>经济学</a></li>" +
     "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=法学' class='menu2'>法学</a></li>" +
-    "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=教育学' class='menu2'>教育学</a></li> ");
+    "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=教育学' class='menu2'>教育学</a></li> "+
+    "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=文学' class='menu2'>文学</a></li> "+
+    "<li class='Lev2'><a href='SiZhengAnLiList.html?lb=历史学' class='menu2'>历史学</a></li>")
 document.write("</ul>");
 document.write("</li>");
 document.write("<li class='Lev1 drop' id='nav_4'>");

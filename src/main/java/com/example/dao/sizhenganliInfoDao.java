@@ -22,12 +22,18 @@ public interface sizhenganliInfoDao extends Mapper<sizhenganliInfo> {
     int checkRepeat(@Param("column") String column, @Param("value") String value, @Param("id") Long id);
 
     Integer count();
+    // 新增方法：更新审批状态为通过
+    @Update("UPDATE sizhenganli_info SET shengpi = '通过' WHERE id = #{id}")
+    int approve(@Param("id") Long id);
 
-    @Select("select * from sizhenganli_info where faburen = #{faburen} and shengpi = true")
+    // 新增方法：更新审批状态为不通过
+    @Update("UPDATE sizhenganli_info SET shengpi = '不通过' WHERE id = #{id}")
+    int reject(@Param("id") Long id);
+    @Select("select * from sizhenganli_info where faburen = #{faburen}")
     sizhenganliInfo selectByFaburen(String faburen);
 
 //    @Select("SELECT distinct(leibie) as aa,count(id) as bb FROM sizhenganli_info where shengpi = 1 group by leibie order by id")
-    @Select("SELECT distinct(leibie) as aa,count(id) as bb FROM sizhenganli_info where shengpi = true group by leibie order by id")
+    @Select("SELECT distinct(leibie) as aa,count(id) as bb FROM sizhenganli_info group by leibie order by id")
     List<Map<String, Object>> sizhenganli_tj_leibie();
 
 

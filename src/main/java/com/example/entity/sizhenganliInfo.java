@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Table(name = "sizhenganli_info")
@@ -27,13 +28,13 @@ public class sizhenganliInfo extends Account {
     private String dianzan_d;
     @Column(name = "dianzan_c")
     private String dianzan_c;
-
     @Column(name = "addtime")
     private String addtime;
     @Column(name = "status")
     private String status;
     @Column(name = "shengpi")
     private String shengpi;
+
 
     @Transient
     private List<Long> shouyetupianflst;    //yoxuxtupTransiexnt
@@ -74,7 +75,6 @@ public class sizhenganliInfo extends Account {
 
     public String getShengpi(){return shengpi;}
     public void setShengpi(String shengpi){this.shengpi = shengpi;}
-
     public String getLeibie() {
         return leibie;
     }

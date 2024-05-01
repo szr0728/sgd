@@ -45,7 +45,6 @@ public class sizhenganliInfoController {
 
     @PostMapping
     public Result<sizhenganliInfo> add(@RequestBody sizhenganliInfoVo sizhenganliInfo) {
-
         //mixmajixami
         sizhenganliInfoService.add(sizhenganliInfo);
         return Result.success(sizhenganliInfo);
@@ -78,8 +77,9 @@ public class sizhenganliInfoController {
     }
 
     @GetMapping("/changeStatus/{id}")
-    public Result<sizhenganliInfo> changeStatus(@PathVariable Long id) {
+    public Result<sizhenganliInfo> changeStatus(@PathVariable long id) {
         sizhenganliInfoService.changeStatus(id);
+
         return Result.success();
     }
 
@@ -91,7 +91,7 @@ public class sizhenganliInfoController {
     @GetMapping("/page/{name}")
     public Result<PageInfo<sizhenganliInfoVo>> page(@PathVariable String name,
                                                       @RequestParam(defaultValue = "1") Integer pageNum,
-                                                      @RequestParam(defaultValue = "5") Integer pageSize,
+                                                      @RequestParam(defaultValue = "7") Integer pageSize,
                                                       HttpServletRequest request) {
         return Result.success(sizhenganliInfoService.findPage(name, pageNum, pageSize, request));
     }
@@ -177,7 +177,20 @@ public class sizhenganliInfoController {
         writer.close();
         IoUtil.close(System.out);
     }
+    @GetMapping("/approve/{id}")
+    public Result<sizhenganliInfo> approve(@PathVariable Long id) {
+        sizhenganliInfoService.approve(id); // 调用 Service 层方法更改状态
+        return Result.success();
+    }
 
+    /**
+     * 更改思政案例审批状态为不通过
+     */
+    @GetMapping("/reject/{id}")
+    public Result<sizhenganliInfo> reject(@PathVariable Long id) {
+        sizhenganliInfoService.reject(id); // 调用 Service 层方法更改状态
+        return Result.success();
+    }
     private void getPieData(String name, List<EchartsData> pieList, Map<String, Double> dataMap) {
         EchartsData pieData = new EchartsData();
         EchartsData.Series series = new EchartsData.Series();
